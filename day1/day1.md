@@ -24,8 +24,8 @@ create-react-app my-app
 vue的局限性，它是一个前端的框架，但是react，node环境是没DOM和BOM，react
 
 ```html
-  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
 ```
 
 - react.js 核心库 是可以单独用于服务端的
@@ -49,6 +49,12 @@ npm install babel-loader@8.0.0-beta.0 @babel/core @babel/preset-env webpack --D
 # dva
 
 后期我们开发的时候会使用dva，它也是我们常用的react框架
+
+全局安装
+```bash
+npm install dva-cli -g
+dva new dva-quickstart
+```
 
 # hello world
 
@@ -268,3 +274,120 @@ ReactDOM.render(
     document.getElementById('root')
 );
 ```
+
+
+# 组件
+
+React的组件，基本没有用到任何像Vue的写法，它是跟ES6想匹配
+
+组件的本质是函数，随便定义一个函数，那就是组件
+```js
+Vue.extend()
+Vue.component()
+.vue单文件
+```
+
+react的组件就是纯函数
+```js
+import React from 'react'
+// React.createElement('header', null, '微信')
+const Header = () => {
+    let style = {
+        height: '50px',
+        width: '100%',
+        lineHeight: '50px',
+        backgroundColor: 'red',
+        textAlign: 'center'
+    }
+    return (
+        <header style={style}>微信</header>
+    )
+}
+
+export default Header
+```
+
+使用函数组件的时候有两种方法
+```js
+ReactDOM.render(
+    <div>
+        {Header()}
+        {Header()}
+        {Header()}
+        {Header()}
+        <Header />
+        <Header />
+        <Header />
+        <Header />
+    </div>,
+    document.getElementById('root')
+);
+```
+
+- 函数组件 无状态组件 M是不动的话
+- 类组件组件 有状态组件 M动的话建议用这个
+
+类组件跟函数组件有点类似
+```js
+import React, { Component } from 'react'
+export default class Footer extends Component {
+    render() {
+        return (
+            <footer>底部组件</footer>
+        )
+    }
+}
+```
+
+# 数据 Model
+
+Vue 放入data属性里面，或者computed
+
+我们可以通过props，从父组件把props交给子组件
+
+如果是函数组件的话
+```html
+<div>
+    {Header({
+        title: '微信',
+        age: 16
+    })}
+    <Header title="微信4" age="16" />
+</div>
+```
+在组件内部用参数接受
+```js
+const Header = (props) => {
+    return (
+        <header style={style}>{props ? props.title : '支付宝'}</header>
+    )
+}
+```
+如果是类组件的话
+```html
+<div>
+    <Header title="微信4" age="16" />
+</div>
+```
+```js
+class Footer extends Component {
+    constructor(props) {
+        super(props)
+    }
+    render() {
+        return (
+            <footer>底部组件{this.props.title}</footer>
+        )
+    }
+}
+```
+你可以利用props来传递任何类型，包括jsx或者html，实现类似插槽的效果
+```html
+<Footer title={<p>支付宝</p>} age="16" />
+```
+
+VS框架 View-State
+```
+state(react) === data(vue)
+```
+

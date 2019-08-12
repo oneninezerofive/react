@@ -2,7 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 //  React.createElement('div', null, 'hello world')
 // M
+// 引入组件
 
+import Header from './components/Header/Header'
+import Footer from './components/Footer/Footer'
 
 // M -> V
 // V
@@ -46,6 +49,19 @@ const JSX = () => {
 }
 console.log(JSX)
 ReactDOM.render(
-    <JSX></JSX>,
+    <div>
+        {Header()}
+        {Header()}
+        {Header()}
+        {Header({
+            title: '微信',
+            age: 16
+        })}
+        <Header title="微信4" age="16" />
+        <Header title="微信3" age="16" />
+        <Header title="微信2" age="16" />
+        <Header title="微信1" age="16" />
+        <Footer title={<p>支付宝</p>} age="16" />
+    </div>,
     document.getElementById('root')
 );
