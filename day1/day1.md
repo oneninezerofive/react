@@ -281,6 +281,8 @@ ReactDOM.render(
 React的组件，基本没有用到任何像Vue的写法，它是跟ES6想匹配
 
 组件的本质是函数，随便定义一个函数，那就是组件
+
+- 组件名称必须以大写字母开头
 ```js
 Vue.extend()
 Vue.component()
@@ -343,6 +345,12 @@ export default class Footer extends Component {
 
 Vue 放入data属性里面，或者computed
 
+```
+new Vue({
+    data:{}
+})
+```
+
 我们可以通过props，从父组件把props交给子组件
 
 如果是函数组件的话
@@ -389,5 +397,36 @@ class Footer extends Component {
 VS框架 View-State
 ```
 state(react) === data(vue)
+```
+
+你可以在构造器里面写state或者静态方法写state
+```js
+class Footer extends Component {
+    constructor(props) {
+        super(props)
+        let a = 1
+        // Model
+        this.state = {
+            name: 'yao'
+        }
+    }
+    // state = {
+    //     name: 'yao'
+    // }
+    render() {
+        return (
+            <footer>底部组件{this.props.title}</footer>
+        )
+    }
+}
+```
+二阶段的写法对应上面的写法
+```js
+function Footer(){
+    let a = 1
+    this.state = {}
+}
+Footer.prototype.render=()=>{}
+Footer.state = {}
 ```
 
