@@ -1,4 +1,5 @@
 import dva from 'dva';
+import 'weui'
 import './index.css';
 
 // 1. Initialize

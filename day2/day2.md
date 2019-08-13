@@ -252,3 +252,154 @@ ReactDOM.render(<UnmountingComponent/>, document.getElementById('div3'));
 
 - [组件的生命周期DEMO1](https://wscats.github.io/react-tutorial/react/component/src/lifecycle/lifecycle.html)
 - [组件的生命周期DEMO2](https://wscats.github.io/react-tutorial/react/component/src/lifecycle/生命周期.html)
+
+## 事件处理
+
+React的事件很像这个原生的写法，有规律是`onXxxx` `on`后面个一个大写字母
+```js
+<button onClick={activateLasers}>
+  Activate Lasers
+</button>
+```
+跟vue不一样
+```html
+<button @click="activateLasers"></button>
+```
+事件绑定是唯一一种方式实现从视图层把数据带回数据层，Vue里面要用两个指令实现(v-model,v:on)，都需要用事件自己处理，包括输入框的值也需要`onChange`来去处理，并且注意的是事件绑定的时候，函数内部的this是undefined，所以如果你需要操作组件内部的状态（数据）`onXxxx = this.方法名.bind(this,xxx)`，方法一般建议放到组件的原型链上面
+```js
+import React, { Component } from 'react'
+const Fn = () => {
+    console.log(1)
+}
+class Notice extends Component {
+    constructor(props) {
+        super(props)
+        this.props = props
+        this.state = {
+            text: 1,
+            Fn() {
+                console.log(3)
+            }
+        }
+    }
+    Fn() {
+        this.setState({
+            text: 8
+        })
+    }
+    getInputValue(num,num2,e) {
+        this.setState({
+            text: e.target.value
+        })
+    }
+    render() {
+        return (
+            <div>
+                <button onClick={Fn}>ok</button>
+                <button onClick={this.Fn.bind(this)}>ok</button>
+                <button onClick={this.state.Fn}>ok</button>
+                <input value={this.state.text} onChange={this.getInputValue.bind(this,333,222)} />
+            </div>
+        )
+    }
+}
+export default Notice
+```
+
+如果你需要函数带参数
+```js
+// Methods
+getInputValue(param1, params2, e) {
+    console.log(param1, params2, e.target.value)
+    this.setState({
+        text: e.target.value
+    })
+}
+// View
+{this.getInputValue.bind(this,333,222)} />
+```
+
+### vFor
+
+```js
+<ul>{
+    this.state.arr.map((item, index) => {
+        return (<li key={index}>{item}</li>)
+    })
+}</ul>
+```
+
+### vIf
+
+```js
+import React, { Component } from 'react'
+export default class Footer extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            title: '底部组件123',
+            bool: !0,
+            arr: [1, 2, 3],
+            html: <p>123</p>
+        }
+    }
+    render() {
+        return (
+            <div>
+                <p style={{ color: 'red' }}>1.v-for</p>
+                <ul>{
+                    this.state.arr.map((item, index) => {
+                        return (<li key={index}>{item}</li>)
+                    })
+                }</ul>
+                <hr />
+                <ul>{
+                    ((self) => {
+                        ;;;;;;; let arr = this.state.arr;;;;;;
+                        let newArr = [];;;;;;;;;;;;;;;;;;;;;;;
+                        for (let i = 0; i < arr.length; i++) {
+                            newArr.push(<li key={i}>{arr[i]}</li>)
+                        }
+                        return newArr
+                    })(this)
+                }</ul>
+                <p style={{ color: 'red' }}>2.v-if</p>
+                {this.state.bool ? (
+                    <p>真的</p>
+                ) : (
+                        <p>假的的</p>
+                    )}
+                <button onClick={() => {
+                    this.setState({
+                        bool: !this.state.bool
+                    })
+                }}>ok</button>
+                <p style={{ color: 'red' }}>3.v-show</p>
+                <p style={{
+                    display: this.state.bool ? 'block' : 'none'
+                }}>显示或者隐藏</p>
+                <button onClick={() => {
+                    this.setState({
+                        bool: !this.state.bool
+                    })
+                }}>ok</button>
+                <p style={{ color: 'red' }}>4.v-else</p>
+                <p>{
+                    ((self) => {
+                        switch (self.state.bool) {
+                            case true:
+                                return <span>真的</span>
+                            default:
+                                return <span>假的</span>
+                        }
+                    })(this)
+                }</p>
+                <p style={{ color: 'red' }}>5.v-html</p>
+                <div>{this.state.html}</div>
+
+            </div>
+        )
+    }
+}
+```
+
