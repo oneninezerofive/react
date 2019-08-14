@@ -1,0 +1,16 @@
+<template name="Mine">
+    <div>
+        Mine页面
+    </div>
+</template>
+<script>
+    export default class {
+        constructor(props) {
+            super(props)
+            this.state = {
+                title: "react"
+            }
+        }
+        componentDidMount() { }
+    }
+</script>
