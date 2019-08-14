@@ -1,6 +1,7 @@
 <template name="Mine">
     <div>
         Mine页面
+        <button onClick={this.navTo.bind(this)}>Topic</button>
     </div>
 </template>
 <script>
@@ -11,6 +12,13 @@
                 title: "react"
             }
         }
-        componentDidMount() { }
+        // 编程式导航
+        navTo() {
+            console.log(1)
+            this.props.location.push('/topic')
+        }
+        componentDidMount() {
+            console.log(this.props.match.params.id)
+        }
     }
 </script>

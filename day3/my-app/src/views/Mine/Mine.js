@@ -1,8 +1,19 @@
-import { Component as C, createElement as h } from "react";
+import { Component as WeElement, createElement as h } from "react";
 
-class Mine extends C {
+class Mine extends WeElement {
   render() {
-    return h("div", null, "Mine\u9875\u9762");
+    return h(
+      "div",
+      null,
+      "Mine\u9875\u9762",
+      h(
+        "button",
+        {
+          onClick: this.navTo.bind(this)
+        },
+        "Topic"
+      )
+    );
   }
 
   constructor(props) {
@@ -12,7 +23,14 @@ class Mine extends C {
     };
   }
 
-  componentDidMount() { }
+  navTo() {
+    console.log(1);
+    this.props.location.push("/topic");
+  }
+
+  componentDidMount() {
+    console.log(this.props.match.params.id);
+  }
 }
 
 Mine.css = ``;

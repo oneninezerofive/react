@@ -86,3 +86,135 @@ export default App;
 <Route path="/mine" component={Mine} />
 ```
 上面两句的意思就是，当`url`匹配到路由为`/`，就在这个位置加载`Home`组件，如果匹配到`/mine`，那就加载`Mine`组件，如果你是`/`的话，你需要加上`exact`属性，因为`/mine`既匹配`/`也匹配`/mine`这两个路由。
+
+## 嵌套路由
+
+路由组件，比如Topic本身已经是路由组件了，那可以在Topic继续放`<Route></Route>`继续定义路由
+
+```js
+import React from 'react'
+import { Route, Link } from "react-router-dom";
+const Acp = () => {
+    return (
+        <div>a组件</div>
+    )
+}
+
+const Bcp = () => {
+    return (
+        <div>b组件</div>
+    )
+}
+export default () => {
+    return (
+        <div>
+            Topic页面
+            <Link to="/topic/a">a</Link>
+            <Link to="/topic/b">b</Link>
+            <Route path="/topic/a" component={Acp} />
+            <Route path="/topic/b" component={Bcp} />
+        </div>
+    )
+}
+```
+
+# 路由传参
+
+`<Route path="/mine/:id" component={Mine} />`你可以在`Mine`组件里面获取`this.props.match.params.id`
+```js
+<Router>
+  <Link to="/">Home</Link>
+  <Link to="/mine/1/yao">Mine</Link>
+  <Link to="/topic">Topic</Link>
+  <div className="App">
+    <Route path="/" exact component={Home} />
+    <Route path="/mine/:id/:name" component={Mine} />
+    <Route path="/topic" component={Topic}></Route>
+  </div>
+</Router>
+```
+
+# 重定向
+
+路由重定向
+```js
+<Redirect
+  to={{
+    pathname: "/topic/b",
+  }}
+/>
+```
+
+# 哈希路由和HTML5浏览器路由
+
+哈希路由
+```js
+import { HashRouter as Router, Route, Link, Redirect } from "react-router-dom";
+```
+浏览器路由
+```js
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+```
+
+# 声明式导航
+
+可以带更多复杂的参数
+```html
+<Link to={{
+  pathname: "/mine/999",
+  search: "?sort=name",
+  hash: "#the-hash",
+  state: { fromDashboard: true }
+}}>Mine</Link>
+```
+
+# MemoryRouter
+
+相当于vue的`<keep-alive></keep-alive>`
+
+# Switch
+
+路由分组
+
+```html
+<Switch>
+  <Router>
+    <Link to="/">Home</Link>
+    <NavLink activeClassName="selected" to={{
+      pathname: "/mine/999",
+      search: "?sort=name",
+      hash: "#the-hash",
+      state: { fromDashboard: true }
+    }}>Mine</NavLink>
+    <Link to="/topic">Topic</Link>
+    <div className="App">
+      <Route path="/" exact component={Home} />
+      <Route path="/mine/:id" component={Mine} />
+      <Route path="/topic" component={Topic}></Route>
+    </div>
+
+  </Router>
+</Switch>
+```
+
+# 编程式导航
+
+栈，后入先出，你可以理解为一个杯子，先放进去的最后才出，后放进去的后出
+
+history是一个栈的模式，路由是一种栈的模式
+```js
+history.push()
+history.back()
+history.go()
+```
+编程式导航
+```js
+this.props.history.push("/topic/a");
+```
+
+## match
+
+传参
+```js
+this.props.match.params.id
+```
