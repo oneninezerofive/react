@@ -1,7 +1,12 @@
 <template name="Mine">
     <div>
-        Mine页面
+        <p>Mine页面</p>
+        <button onClick={this.hideInput.bind(this)}>ok</button>
         <button onClick={this.navTo.bind(this)}>Topic</button>
+
+        <a onClick={this.hideInput.bind(this)} href="javascript:" className="weui-search-bar__cancel-btn"
+            id="searchCancel">取消</a>
+        <button onClick={this.hideInput.bind(this)}>ok</button>
     </div>
 </template>
 <script>
@@ -22,3 +27,8 @@
         }
     }
 </script>
+<style>
+    p {
+        color: red
+    }
+</style>

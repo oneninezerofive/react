@@ -1,10 +1,26 @@
 import React, { Component } from 'react'
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import Etable from '../Etable/Etable'
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+import { Layout, Menu } from 'antd';
+import { Route, Switch, Link } from 'dva/router';
+import HomePage from '../../routes/IndexPage/HomePage/HomePage'
+import MinePage from '../../routes/IndexPage/MinePage/MinePage'
+import SettingPage from '../../routes/IndexPage/SettingPage/SettingPage'
+const { Header } = Layout;
+
+
 
 export default class Elayout extends Component {
+    state = {
+        menus: [{
+            title: '首页',
+            url: '/home'
+        }, {
+            title: '我的',
+            url: '/mine'
+        }, {
+            title: '设置',
+            url: '/setting'
+        }]
+    }
     render() {
         return (
             <Layout>
@@ -13,116 +29,25 @@ export default class Elayout extends Component {
                     <Menu
                         theme="dark"
                         mode="horizontal"
-                        defaultSelectedKeys={['2']}
+                        defaultSelectedKeys={['0']}
                         style={{ lineHeight: '64px' }}
                     >
                         {
-                            ['首页', '我的', '设置'].map((item, index) => {
-                                return (<Menu.Item key={index}>{item}</Menu.Item>)
+                            this.state.menus.map((item, index) => {
+                                return (<Menu.Item key={index}>
+                                    <Link to={item.url}>
+                                        {item.title}
+                                    </Link>
+                                </Menu.Item>)
                             })
                         }
                     </Menu>
                 </Header>
-                <Layout>
-
-                    <Sider width={200} style={{ background: '#fff' }}>
-                        <Menu
-                            mode="inline"
-                            defaultSelectedKeys={['1']}
-                            defaultOpenKeys={['sub1']}
-                            style={{ height: '100%', borderRight: 0 }}
-                        >
-                            {[
-                                {
-                                    key: 'sub1',
-                                    title: <span><Icon type="user" />subnav 1</span>,
-                                    options: [1, 2, 3, 4]
-                                },
-                                {
-                                    key: 'sub2',
-                                    title: <span><Icon type="laptop" />subnav 2</span>,
-                                    options: [1, 2, 3, 4]
-                                },
-                                {
-                                    key: 'sub3',
-                                    title: <span><Icon type="notification" />subnav 3</span>,
-                                    options: [1, 2, 3, 4]
-                                }
-                            ].map((item) => {
-                                return (
-                                    <SubMenu
-                                        key={item.key}
-                                        title={item.title}
-                                    >{
-                                            item.options.map((item, index) => {
-                                                return <Menu.Item key={index}>{item}</Menu.Item>
-                                            })
-                                        }
-                                    </SubMenu>
-                                )
-                            })}
-                            {/* <SubMenu
-                                key="sub1"
-                                title={
-                                    <span>
-                                        <Icon type="user" />
-                                        subnav 1
-              </span>
-                                }
-                            >
-                                <Menu.Item key="1">option1</Menu.Item>
-                                <Menu.Item key="2">option2</Menu.Item>
-                                <Menu.Item key="3">option3</Menu.Item>
-                                <Menu.Item key="4">option4</Menu.Item>
-                            </SubMenu>
-                            <SubMenu
-                                key="sub2"
-                                title={
-                                    <span>
-                                        <Icon type="laptop" />
-                                        subnav 2
-              </span>
-                                }
-                            >
-                                <Menu.Item key="5">option5</Menu.Item>
-                                <Menu.Item key="6">option6</Menu.Item>
-                                <Menu.Item key="7">option7</Menu.Item>
-                                <Menu.Item key="8">option8</Menu.Item>
-                            </SubMenu>
-                            <SubMenu
-                                key="sub3"
-                                title={
-                                    <span>
-                                        <Icon type="notification" />
-                                        subnav 3
-              </span>
-                                }
-                            >
-                                <Menu.Item key="9">option9</Menu.Item>
-                                <Menu.Item key="10">option10</Menu.Item>
-                                <Menu.Item key="11">option11</Menu.Item>
-                                <Menu.Item key="12">option12</Menu.Item>
-                            </SubMenu> */}
-                        </Menu>
-                    </Sider>
-                    <Layout style={{ padding: '0 24px 24px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>Home</Breadcrumb.Item>
-                            <Breadcrumb.Item>List</Breadcrumb.Item>
-                            <Breadcrumb.Item>App</Breadcrumb.Item>
-                        </Breadcrumb>
-                        <Content
-                            style={{
-                                background: '#fff',
-                                padding: 24,
-                                margin: 0,
-                                minHeight: 280,
-                            }}
-                        >
-                            <Etable />
-                        </Content>
-                    </Layout>
-                </Layout>
+                <Switch>
+                    <Route path="/home" component={HomePage}></Route>
+                    <Route path="/mine" component={MinePage}></Route>
+                    <Route path="/setting" component={SettingPage}></Route>
+                </Switch>
             </Layout>
         )
     }

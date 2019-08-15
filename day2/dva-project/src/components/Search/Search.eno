@@ -13,6 +13,7 @@
         </form>
         <a onClick={this.hideInput.bind(this)} href="javascript:" className="weui-search-bar__cancel-btn"
             id="searchCancel">取消</a>
+        <button onClick={this.hideInput.bind(this)}>ok</button>
     </div>
 </template>
 <script>

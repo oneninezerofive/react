@@ -1,17 +1,51 @@
 import { Component as WeElement, createElement as h } from "react";
+import styled from "styled-components";
+const StyledComponents = styled.div`
+  p {
+    color: red;
+  }
+`;
 
 class Mine extends WeElement {
   render() {
     return h(
-      "div",
+      StyledComponents,
       null,
-      "Mine\u9875\u9762",
       h(
-        "button",
-        {
-          onClick: this.navTo.bind(this)
-        },
-        "Topic"
+        "div",
+        null,
+        h("p", null, "Mine\u9875\u9762"),
+        h(
+          "button",
+          {
+            onClick: this.hideInput.bind(this)
+          },
+          "ok"
+        ),
+        h(
+          "button",
+          {
+            onClick: this.navTo.bind(this)
+          },
+          "Topic"
+        ),
+        h(
+          "a",
+          {
+            onClick: this.hideInput.bind(this),
+            href: "javascript:",
+            className: "weui-search-bar__cancel-btn",
+            id: "searchCancel"
+          },
+          "\u53D6\u6D88"
+        ),
+        h(
+          "button",
+          {
+            onClick: this.hideInput.bind(this)
+          },
+          "ok"
+        )
       )
     );
   }
@@ -33,5 +67,9 @@ class Mine extends WeElement {
   }
 }
 
-Mine.css = ``;
+Mine.css = `
+    p {
+        color: red
+    }
+`;
 export default Mine;

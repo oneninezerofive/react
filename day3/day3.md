@@ -118,7 +118,7 @@ export default () => {
 }
 ```
 
-# 路由传参
+# 路由传参(动态路由)
 
 `<Route path="/mine/:id" component={Mine} />`你可以在`Mine`组件里面获取`this.props.match.params.id`
 ```js
@@ -207,9 +207,18 @@ history.push()
 history.back()
 history.go()
 ```
-编程式导航
+编程式导航，`<router></router>`组件会把`history`和`location`传入路由组件的`props`
 ```js
 this.props.history.push("/topic/a");
+```
+```js
+new Vue({
+  store,
+  router
+})
+```
+```js
+this.$router.xxx
 ```
 
 ## match
@@ -217,4 +226,21 @@ this.props.history.push("/topic/a");
 传参
 ```js
 this.props.match.params.id
+```
+
+## withRouter
+
+就是把公共组件通过`withRouter`变为高阶组件，从而能访问全局路由`this.props.history`这些对象
+
+```js
+import React from 'react'
+import { withRouter } from "react-router-dom";
+// 高阶组件
+export default withRouter(class Test extends React.Component {
+    render() {
+        return (
+            <div>Test</div>
+        )
+    }
+})
 ```

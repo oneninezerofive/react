@@ -69,6 +69,13 @@ class Search extends WeElement {
             id: "searchCancel"
           },
           "\u53D6\u6D88"
+        ),
+        h(
+          "button",
+          {
+            onClick: this.hideInput.bind(this)
+          },
+          "ok"
         )
       )
     );
