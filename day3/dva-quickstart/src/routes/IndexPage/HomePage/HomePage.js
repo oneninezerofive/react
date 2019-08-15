@@ -3,6 +3,7 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 import menu from './menu'
 import { Route, Link } from 'dva/router';
 import ComplaintPage from './ComplaintPage/ComplaintPage'
+import ProblemPage from './ProblemPage/ProblemPage'
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 export default class HomePage extends Component {
@@ -53,6 +54,7 @@ export default class HomePage extends Component {
                         }}
                     >
                         <Route path="/home/complaint" component={ComplaintPage} />
+                        <Route path="/home/problem" component={ProblemPage} />
                     </Content>
                 </Layout>
             </Layout>

@@ -12,7 +12,7 @@ export default [
             {
                 key: 2,
                 title: '技术问题',
-                url: 'problem'
+                url: '/home/problem'
             },
             {
                 key: 3,
