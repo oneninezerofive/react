@@ -1,6 +1,6 @@
 import React from 'react'
 // import { withRouter } from "react-router-dom";
-
+import store from '../store/store'
 const HOC = (Comp) => {
     let state = {
         name: 'yao'
@@ -30,7 +30,17 @@ class Test extends React.Component {
     }
     componentDidMount() {
         this.refs.test.style.color = 'red'
-        console.log(this.refs.test)
+        // 监听如果仓库有变动
+        store.subscribe(() => console.log(store.getState()))
+        // console.log(this.refs.test)
+        // console.log(store.getState())
+        store.dispatch({
+            type: 'GETSUM'
+        })
+        store.dispatch({
+            type: 'SETNAME',
+            name: 'jing'
+        })
     }
 }
 // 高阶组件

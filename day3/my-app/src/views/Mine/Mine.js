@@ -18,33 +18,9 @@ class Mine extends WeElement {
         h(
           "button",
           {
-            onClick: this.hideInput.bind(this)
-          },
-          "ok"
-        ),
-        h(
-          "button",
-          {
             onClick: this.navTo.bind(this)
           },
           "Topic"
-        ),
-        h(
-          "a",
-          {
-            onClick: this.hideInput.bind(this),
-            href: "javascript:",
-            className: "weui-search-bar__cancel-btn",
-            id: "searchCancel"
-          },
-          "\u53D6\u6D88"
-        ),
-        h(
-          "button",
-          {
-            onClick: this.hideInput.bind(this)
-          },
-          "ok"
         )
       )
     );
