@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table, Input, Button, Popconfirm, Form } from 'antd';
 import request from '../../utils/request'
+import { connect } from 'dva';
 const EditableContext = React.createContext();
 
 const EditableRow = ({ form, index, ...props }) => (
@@ -86,7 +87,7 @@ class EditableCell extends React.Component {
     }
 }
 
-export default class EditableTable extends React.Component {
+class EditableTable extends React.Component {
     constructor(props) {
         super(props);
         this.columns = [
@@ -136,6 +137,7 @@ export default class EditableTable extends React.Component {
     }
 
     async componentDidMount() {
+        console.log(this)
         let { data } = await request('https://www.easy-mock.com/mock/5d3fe0fc738f621651cd1f4a/list/news')
         data = data.map((item, index) => {
             item.key = index
@@ -153,17 +155,11 @@ export default class EditableTable extends React.Component {
     };
 
     handleAdd = () => {
-        const { count, dataSource } = this.state;
-        const newData = {
-            key: count,
-            name: `Edward King ${count}`,
-            age: 32,
-            address: `London, Park Lane no. ${count}`,
-        };
-        this.setState({
-            dataSource: [...dataSource, newData],
-            count: count + 1,
-        });
+        this.props.dispatch({
+            type: 'products/add',
+            payload: ['abc']
+        })
+        console.log(1)
     };
 
     handleSave = row => {
@@ -202,6 +198,9 @@ export default class EditableTable extends React.Component {
         });
         return (
             <div>
+                {this.props.products.arr.map((item, index) => {
+                    return <p key={index}>{item}</p>
+                })}
                 <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16 }}>
                     Add a row
         </Button>
@@ -216,3 +215,8 @@ export default class EditableTable extends React.Component {
         );
     }
 }
+// 从model里面获取值并挂载到props上面
+export default connect(({ products }) => ({
+    products,
+}))(EditableTable)
+// export default EditableTable
